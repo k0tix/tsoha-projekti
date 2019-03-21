@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Float</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <th>{{ item.name }}</th>
+            <th>{{ item.price }}</th>
+            <th>{{ item.item_float }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
