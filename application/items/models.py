@@ -1,4 +1,6 @@
-from application import db
+from application import db, ma
+
+### MODEL ###
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -14,3 +16,12 @@ class Item(db.Model):
         self.name = name
         self.price = price
         self.item_float = item_float
+
+### SCHEMA ###
+
+class ItemSchema(ma.ModelSchema):
+    class Meta:
+        model = Item
+
+item_schema = ItemSchema()
+items_schema = ItemSchema(many=True)

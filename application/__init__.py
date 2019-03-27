@@ -1,6 +1,7 @@
 # Importing Flask
 from flask import Flask
 app = Flask(__name__)
+#app = Flask(__name__, static_folder='./static/dist', template_folder='./static')
 
 # Importing SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +13,11 @@ app.config["SQLALCHEMY_ECHO"] = True
 
 # Create db object for database handling
 db = SQLAlchemy(app)
+
+# Importing Marshmallow
+from flask_marshmallow import Marshmallow
+
+ma = Marshmallow(app)
 
 # Read views from application folder
 from application import views

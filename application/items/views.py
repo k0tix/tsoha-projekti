@@ -1,10 +1,11 @@
 from application import app, db
-from flask import redirect, render_template, request, url_for
-from application.items.models import Item
-import json
+from flask import redirect, render_template, request, url_for, jsonify
+from application.items.models import Item, item_schema, items_schema
 
 @app.route("/items/", methods=["GET"])
 def items_index():
+    #items = items_schema.dump(Item.query.all()).data
+    #return jsonify(items)
     return render_template("items/list.html", items = Item.query.all())
 
 @app.route("/items/new/")
