@@ -9,9 +9,15 @@
         </tr>
         {% for item in items %}
         <tr>
-            <th>{{ item.name }}</th>
-            <th>{{ item.price }}</th>
-            <th>{{ item.item_float }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.item_float }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('items_set_price', item_id=item.id) }}">
+                    <input type="number" name="price" placeholder="new price"/>
+                    <input type="submit" value="Change price"/>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </table>
