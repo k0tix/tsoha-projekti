@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://127.0.0.1:5000/api/items/'
+const baseUrl = '/api/items/'
 
 const getAll = () => {
     const request = axios.get(baseUrl)
