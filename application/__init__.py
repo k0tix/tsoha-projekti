@@ -1,7 +1,6 @@
 # Importing Flask
 from flask import Flask
-app = Flask(__name__)
-#app = Flask(__name__, static_folder='./static/dist', template_folder='./static')
+app = Flask(__name__, static_folder='./static/dist', template_folder='./static')
 
 # Importing SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
