@@ -37,9 +37,9 @@ class App extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <Segment>
-                                    <Route exact path='/' render={() => <Header as='h2'>Welcome to Byteskins - A marketplace for in-game items</Header>}/>
+                                    <Route path='/' render={() => <Header as='h2'>Welcome to Byteskins - A marketplace for in-game items</Header>}/>
                                     <Route exact path='/items' render={() => <MarketItems></MarketItems>} />
-                                    <Route exact path='/items/new' render={() => <MarketItemForm></MarketItemForm>} />
+                                    <Route path='/items/new' render={() => <MarketItemForm></MarketItemForm>} />
                                 </Segment>
                             </Grid.Column>
                         </Grid.Row>
