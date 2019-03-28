@@ -30,9 +30,9 @@ export const itemInitialization = () => {
     }
 }
 
-export const createItem = (item) => {
+export const createItem = (newItem) => {
     return (dispatch) => {
-        itemService.create(item).then(() => {
+        itemService.create(newItem).then((item) => {
             dispatch({
                 type: CREATE,
                 item
