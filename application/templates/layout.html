@@ -33,6 +33,15 @@
 	</div>
 
 	<div class="ui container" style="padding-top: 4em">
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			  <div class=flashes>
+			  {% for message in messages %}
+				<div class="ui negative message">{{ message }}</div>
+			  {% endfor %}
+			  </div>
+			{% endif %}
+		  {% endwith %}
 		{% block body %}
 		<p>
 			Content.

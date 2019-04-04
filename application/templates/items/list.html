@@ -1,30 +1,48 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1 class="ui header">All items</h1>
-    <div class="ui divider"></div>
-    <div class="ui four cards">
-        {% for item in items %}
-        <div class="ui raised card">
-            <div class="image">
-                <div class="ui placeholder" style="height: 150px; width: 150px">
-                    <div class="square image"></div>
-                </div>
-            </div>
-            <div class="content">
-                <div class="header">
-                    <h2>{{ item.name }}</h2>
-                </div>
-                <div class="meta">
-                    <span class="ui green label">{{ item.price / 100 }} €</span>
-                    <span class="seller">{{ item.account_id }}</span>
-                </div>
-                <div class="description">
-                    <p>Quality: {{ item.item_float }}</p>
-                    <p>Type: {{ item.item_type }}</p>
-                </div>
+<h1 class="ui header">All items</h1>
+<div class="ui divider"></div>
+{% if error %}
+    <div class="ui negative message">{{ error }}</div>
+{% endif %}
+<div class="ui four cards">
+    {% for item in items %}
+    <div class="ui raised card">
+        <div class="image">
+            <div class="ui placeholder" style="height: 150px; width: 150px">
+                <div class="square image"></div>
             </div>
         </div>
-        {% endfor %}
+        <div class="content">
+            <div class="header">
+                <h2>{{ item.name }}</h2>
+            </div>
+            <div class="meta">
+                <span class="ui green label">{{ item.price / 100 }} €</span>
+                <span class="seller">{{ item.account_id }}</span>
+            </div>
+            <div class="description">
+                <p>Quality: {{ item.item_float }}</p>
+                <p>Type: {{ item.item_type }}</p>
+                <form method="POST" action="/items/{{ item.id }}" class="ui form">
+                    <input type="number" value="{{ item.price }}" name="price"/>
+                    <button class="ui red button" type="submit">
+                            <i class="add icon"></i>
+                            Change price
+                        </button>
+                </form>
+            </div>
+            <form method="POST" action="/items/purchase/{{ item.id }}">
+                <input type="hidden" value="{{ item.id }}"/>
+                <button class="ui blue bottom attached button" type="submit">
+                    <i class="add icon"></i>
+                    Buy item
+                </button>
+            </form>
+        </div>
+        
     </div>
+    {% endfor %}
+</div>
 {% endblock %}
