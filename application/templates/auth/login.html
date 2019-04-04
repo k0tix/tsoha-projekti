@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class="ui blue header">
+            Log-in to your account
+        </h2>
+        {% if error %}
+            <div class="ui negative message">{{ error }} </div>
+        {% endif %}
+        <form class="ui large form" method="POST" action="{{ url_for('auth_login') }}">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        {{ form.username(placeholder="Username") }}
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        {{ form.password(placeholder="Password", type="password")}}
+                    </div>
+                </div>
+                <input type="submit" class="ui fluid large blue submit button" value="Login" />
+            </div>
+
+        </form>
+
+        <div class="ui message">
+            New to us? <a href="{{ url_for('auth_register') }}">Sign Up</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,24 +1,30 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <table>
-        <tr>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Float</th>
-        </tr>
+    <h1 class="ui header">All items</h1>
+    <div class="ui divider"></div>
+    <div class="ui four cards">
         {% for item in items %}
-        <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.item_float }}</td>
-            <td>
-                <form method="POST" action="{{ url_for('items_set_price', item_id=item.id) }}">
-                    <input type="number" name="price" placeholder="new price"/>
-                    <input type="submit" value="Change price"/>
-                </form>
-            </td>
-        </tr>
+        <div class="ui raised card">
+            <div class="image">
+                <div class="ui placeholder" style="height: 150px; width: 150px">
+                    <div class="square image"></div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="header">
+                    <h2>{{ item.name }}</h2>
+                </div>
+                <div class="meta">
+                    <span class="ui green label">{{ item.price / 100 }} €</span>
+                    <span class="seller">{{ item.account_id }}</span>
+                </div>
+                <div class="description">
+                    <p>Quality: {{ item.item_float }}</p>
+                    <p>Type: {{ item.item_type }}</p>
+                </div>
+            </div>
+        </div>
         {% endfor %}
-    </table>
+    </div>
 {% endblock %}

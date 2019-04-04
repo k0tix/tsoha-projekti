@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Byteskins - A marketplace for in-game items</title>
-  </head>
 
-  <body>
-    <h1>Byteskins</h1>
-    <ul>
-      <li><a href="{{ url_for('items_index') }}">List items</a></li>
-      <li><a href="{{ url_for('items_form') }}">Add an item</a></li>
-    </ul>
-    {% block body %}
-      <p>
-        Content.
-      </p>
-    {% endblock %}
-  </body>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+	<title>Byteskins - A marketplace for in-game items</title>
+</head>
+
+<body>
+	<div class="ui fixed inverted menu">
+		<div class="ui container">
+			<a href="{{ url_for('index') }}" class="header item">
+				Byteskins
+			</a>
+			<a href="{{ url_for('items_index') }}" class="item">Items</a>
+			<a href="{{ url_for('items_form') }}" class="item">Add item</a>
+			{% if current_user.is_authenticated %}
+				<div class="right item">
+					<div class="ui blue big label">{{ current_user.name }}</div>
+					<a class="ui red button" href="{{ url_for('auth_logout') }}">Logout</a>
+				</div>
+				
+			{% else %}
+				<div class="right item">
+					<a class="ui inverted button" href="{{ url_for('auth_login') }}">Log in</a>
+					<a class="ui inverted button" href="{{ url_for('auth_register') }}">Sign Up</a>
+				</div>
+        	{% endif %}
+		</div>
+	</div>
+
+	<div class="ui container" style="padding-top: 4em">
+		{% block body %}
+		<p>
+			Content.
+		</p>
+		{% endblock %}
+	</div>
+</body>
+
 </html>

@@ -1,10 +1,22 @@
 {% extends "layout.html" %}
-  
+
 {% block body %}
-<form method="POST" action="{{ url_for('items_create') }}">
-  <input type="text" name="name" placeholder="name"/>
-  <input type="number" name="price" placeholder="price"/>
-  <input type="number" name="float" placeholder="float" min="0" max="1" step="0.001"/>
-  <input type="submit" value="Add a new item"/>
-</form>
+<div class="ui segment">
+	<form method="POST" action="{{ url_for('items_create') }}" class="ui form">
+
+		{{ form.name.label }}
+		{{ form.name(placeholder="name") }}
+
+		{{ form.item_type.label }}
+		{{ form.item_type(placeholder="type") }}
+
+		{{ form.price.label }}
+		{{ form.price(placeholder="price", type="number") }}
+
+		{{ form.quality.label }}
+		{{ form.quality(placeholder="float", min="0", max="1", step="0.001", type="number") }}
+
+		<input type="submit" value="Add a new item" class="ui primary button"/>
+	</form>
+</div>
 {% endblock %}
