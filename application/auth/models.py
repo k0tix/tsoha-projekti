@@ -44,7 +44,7 @@ class User(db.Model):
     def find_users_purchases(user_id):
         stmt = text("SELECT Item.name, Item.price, Purchase.date_created FROM Item"
                     " JOIN Purchase ON Purchase.item_id = Item.id"
-                    " WHERE Purchase.account_id IS :acc_id").params(acc_id=user_id)
+                    " WHERE Purchase.account_id = :acc_id").params(acc_id=user_id)
 
         res = db.engine.execute(stmt)
 
@@ -57,7 +57,7 @@ class User(db.Model):
     def get_total_money_used(user_id):
         stmt = text("SELECT SUM(Item.price) FROM Item"
                     " JOIN Purchase ON Purchase.item_id = Item.id"
-                    " WHERE Purchase.account_id IS :acc_id").params(acc_id=user_id)
+                    " WHERE Purchase.account_id = :acc_id").params(acc_id=user_id)
 
         res = db.engine.execute(stmt)
 
@@ -67,7 +67,7 @@ class User(db.Model):
     def get_average_quality_purchased(user_id):
         stmt = text("SELECT AVG(Item.item_float) FROM Item"
                     " JOIN Purchase ON Purchase.item_id = Item.id"
-                    " WHERE Purchase.account_id IS :acc_id").params(acc_id=user_id)
+                    " WHERE Purchase.account_id = :acc_id").params(acc_id=user_id)
 
         res = db.engine.execute(stmt)
 
