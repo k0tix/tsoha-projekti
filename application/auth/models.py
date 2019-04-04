@@ -1,5 +1,7 @@
 from application import db, flask_bcrypt
 
+from sqlalchemy.sql import text
+
 ### Model ###
 
 class User(db.Model):
@@ -37,3 +39,38 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def find_users_purchases(user_id):
+        stmt = text("SELECT Item.name, Item.price, Purchase.date_created FROM Item"
+                    " JOIN Purchase ON Purchase.item_id = Item.id"
+                    " WHERE Purchase.account_id IS :acc_id").params(acc_id=user_id)
+
+        res = db.engine.execute(stmt)
+
+        response = []
+        for row in res:
+            response.append({"name":row[0], "price":row[1], "date":row[2]})
+
+        return response
+
+    def get_total_money_used(user_id):
+        stmt = text("SELECT SUM(Item.price) FROM Item"
+                    " JOIN Purchase ON Purchase.item_id = Item.id"
+                    " WHERE Purchase.account_id IS :acc_id").params(acc_id=user_id)
+
+        res = db.engine.execute(stmt)
+
+        for row in res:
+            return row[0]
+
+    def get_average_quality_purchased(user_id):
+        stmt = text("SELECT AVG(Item.item_float) FROM Item"
+                    " JOIN Purchase ON Purchase.item_id = Item.id"
+                    " WHERE Purchase.account_id IS :acc_id").params(acc_id=user_id)
+
+        res = db.engine.execute(stmt)
+
+        for row in res:
+            return row[0]
+
