@@ -8,3 +8,8 @@ The application allows users to buy and sell in-game items. A user can buy in-ga
 
 ## Heroku
 Working [demo](https://tsoha-marketplace.herokuapp.com/)
+
+### Test user
+username: test
+
+password: test
