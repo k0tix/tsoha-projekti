@@ -1,4 +1,4 @@
-from application import db, ma
+from application import db
 
 ### MODEL ###
 
@@ -10,18 +10,16 @@ class Item(db.Model):
 
     name = db.Column(db.String(144), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    item_float = db.Column(db.Float, nullable=False)
+    item_float = db.Column(db.Float, nullable=False) #Describes how good the item is from 0-1. 1 is perfect quality and 0 is worst quality
+    item_type = db.Column(db.String(144), nullable=False)
+    sold = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, name, price, item_float):
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
+                           nullable=False)
+
+    def __init__(self, name, price, item_float, item_type):
         self.name = name
         self.price = price
         self.item_float = item_float
-
-### SCHEMA ###
-
-class ItemSchema(ma.ModelSchema):
-    class Meta:
-        model = Item
-
-item_schema = ItemSchema()
-items_schema = ItemSchema(many=True)
+        self.item_type = item_type
+        self.sold = False
