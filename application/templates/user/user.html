@@ -1,8 +1,53 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <h1 class="ui header">User account</h1>
-    <div class="ui divider"></div>
-    {{ user.name }}
-    {{ user.username }}
+<h1 class="ui header">User account</h1>
+<div class="ui divider"></div>
+    <div class="ui segment">
+        <div class="ui grid">
+            <div class="four wide column">
+                <div class="ui image" style="background-color: lightgrey">
+                    <div class="ui placeholder" style="height: 250px; width: 400px"></div>
+                </div>
+            </div>
+            <div class="six wide column" style="margin: auto">
+                <h1 class="header">
+                    {{ user.name }}
+                </h1>
+                <div class="ui blue basic label">{{ user.username }}</div>
+                <p style="margin-top: 1em">{{ user.email }}</p>
+            </div>
+            <div class="four wide column" style="margin: auto">
+                <div class="ui raised segment" style="text-align: center">
+                    Total money used
+                    <h1 class="ui red header">{{ total_money }}€</h1>
+                </div>
+                <div class="ui secondary segment">
+                    Average quality bought: {{ average_quality }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui segment">
+        <h1>Purchases</h1>
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase.name }}</td>
+                        <td>{{ purchase.price }}</td>
+                        <td>{{ purchase.date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
