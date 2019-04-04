@@ -1,6 +1,6 @@
 # Importing Flask
 from flask import Flask
-app = Flask(__name__, static_folder='./static/dist', template_folder='./static')
+app = Flask(__name__)
 
 # Importing Bcrypt
 from flask_bcrypt import Bcrypt
@@ -17,11 +17,6 @@ app.config["SQLALCHEMY_ECHO"] = True
 # Create db object for database handling
 db = SQLAlchemy(app)
 
-# Importing Marshmallow
-from flask_marshmallow import Marshmallow
-
-ma = Marshmallow(app)
-
 # Read views from application folder
 from application import views
 
@@ -30,6 +25,8 @@ from application.items import models
 
 from application.auth import views
 from application.auth import models
+
+from application.user import views
 
 # Login
 from application.auth.models import User
