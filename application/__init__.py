@@ -23,17 +23,6 @@ else:
 # Create db object for database handling
 db = SQLAlchemy(app)
 
-# Read views from application folder
-from application import views
-
-from application.items import views
-from application.items import models
-
-from application.auth import views
-from application.auth import models
-
-from application.user import views
-
 # Login
 from application.auth.models import User
 from os import urandom
@@ -45,6 +34,47 @@ login_manager.init_app(app)
 
 login_manager.login_view = "auth_login"
 login_manager.login_message = "Please login to use this functionality."
+
+# Roles in login_required
+from functools import wraps
+
+def login_required(role="ANY"):
+    def wrapper(fn):
+        @wraps(fn)
+        def decorated_view(*args, **kwargs):
+            if not current_user:
+                return login_manager.unauthorized()
+
+            if not current_user.is_authenticated:
+                return login_manager.unauthorized()
+            
+            unauthorized = False
+
+            if role != "ANY":
+                unauthorized = True
+                
+                for user_role in current_user.roles():
+                    if user_role == role:
+                        unauthorized = False
+                        break
+
+            if unauthorized:
+                return login_manager.unauthorized()
+            
+            return fn(*args, **kwargs)
+        return decorated_view
+    return wrapper
+
+# Read views from application folder
+from application import views
+
+from application.items import views
+from application.items import models
+
+from application.auth import views
+from application.auth import models
+
+from application.user import views
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -18,6 +18,8 @@ class User(db.Model):
     email = db.Column(db.String(144), nullable=False)
     pwd_hash = db.Column(db.String(144), nullable=False)
     balance = db.Column(db.Integer, nullable=False)
+    banned = db.Column(db.Boolean, nullable=False)
+    role = db.Column(db.String(144), nullable=False)
 
     items = db.relationship("Item", backref="account", lazy=True)
 
@@ -27,6 +29,8 @@ class User(db.Model):
         self.email = email
         self.pwd_hash = flask_bcrypt.generate_password_hash(pwd).decode("utf-8")
         self.balance = 10000000
+        self.banned = False
+        self.role = "USER"
     
     def get_id(self):
         return self.id
@@ -39,6 +43,9 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+    def roles(self):
+        return self.role
 
     @staticmethod
     def find_users_purchases(user_id):

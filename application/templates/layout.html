@@ -19,7 +19,7 @@
 			<a href="{{ url_for('items_form') }}" class="item">Add item</a>
 			{% if current_user.is_authenticated %}
 				<div class="right item">
-					<a class="ui blue big label" href="{{ url_for('user_index') }}">{{ current_user.name }}</a>
+					<a class="ui blue big label" href="{{ url_for('user_index', user_username=current_user.username) }}">{{ current_user.name }}</a>
 					<a class="ui red button" href="{{ url_for('auth_logout') }}">Logout</a>
 				</div>
 				

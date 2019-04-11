@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1 class="ui header">User account</h1>
+<div class="ui divider"></div>
+    <div class="ui segment">
+        <div class="ui grid">
+            <div class="four wide column">
+                <div class="ui image" style="background-color: lightgrey">
+                    <div class="ui placeholder" style="height: 250px; width: 400px"></div>
+                </div>
+            </div>
+            <div class="six wide column" style="margin: auto">
+                <h1 class="header">
+                    {{ user.name }}
+                </h1>
+                <div class="ui red label">{{ user.role }}</div>
+                <div class="ui blue basic label">{{ user.username }}</div>
+                <p style="margin-top: 1em">{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
