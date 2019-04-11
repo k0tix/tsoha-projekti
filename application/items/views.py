@@ -9,7 +9,8 @@ from application.purchase.models import Purchase
 
 @app.route("/items/", methods=["GET"])
 def items_index():
-    return render_template("items/list.html", items = Item.query.all())
+    i = Item.query.filter(Item.sold == False)
+    return render_template("items/list.html", items = i)
 
 @app.route("/items/new")
 @login_required
@@ -41,8 +42,13 @@ def items_create():
 @login_required
 def items_set_price(item_id):
     i = Item.query.get(item_id)
-    i.price = request.form["price"]
-    db.session().commit()
+
+    if i.account_id == current_user.id:
+        i.price = request.form["price"]
+        db.session().commit()
+    else:
+        flash("You can only change the price of your own items")
+
     return redirect(url_for("items_index"))
 
 @app.route("/items/purchase/<item_id>", methods=["POST"])
