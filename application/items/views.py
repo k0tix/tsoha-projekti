@@ -10,7 +10,7 @@ from application.purchase.models import Purchase
 @app.route("/items/", methods=["GET"])
 def items_index():
     i = Item.query.filter(Item.sold == False)
-    return render_template("items/list.html", items = i)
+    return render_template("items/list.html", items = i, current_user=current_user)
 
 @app.route("/items/new")
 @login_required
@@ -38,6 +38,16 @@ def items_create():
 
     return redirect(url_for("items_index"))
 
+@app.route("/items/<item_id>", methods=["GET"])
+def items_view(item_id):
+    i = Item.query.get(item_id)
+
+    if not i:
+        flash("item was not found")
+        redirect(url_for("items_index"))
+    
+    return render_template("items/view.html", item=i)
+
 @app.route("/items/<item_id>", methods=["POST"])
 @login_required
 def items_set_price(item_id):
@@ -48,6 +58,24 @@ def items_set_price(item_id):
         db.session().commit()
     else:
         flash("You can only change the price of your own items")
+
+    return redirect(url_for("items_index"))
+
+@app.route("/items/delete/<item_id>", methods=["POST"])
+@login_required
+def items_delete(item_id):
+    i = Item.query.get(item_id)
+
+    if not i:
+        flash("Item not found")
+    elif i.sold:
+        flash("Item has already been sold")
+    elif i.account_id == current_user.id or current_user.role == "ADMIN":
+        db.session.delete(i)
+        db.session.commit()
+        flash("Item deleted successfully")
+    else:
+        flash("Something went wrong")
 
     return redirect(url_for("items_index"))
 
