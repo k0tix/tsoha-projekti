@@ -2,33 +2,49 @@
 
 {% block body %}
 
-<div class="ui segment">
-    {% if item.sold %}
-        <div class="ui negative message">
-            <h1 class="ui red header">This item has already been sold</h1>
-        </div>
-    {% endif %}
-    <div class="ui three column grid">
-        <div class="four wide column">
-            <div class="ui image" style="background-color: lightgrey">
-                <div class="ui placeholder" style="height: 250px; width: 400px"></div>
+{% if current_user.id == item.account_id %}
+    <h1 class="ui header">Edit your item</h1>
+    <div class="ui divider"></div>
+    <form method="POST" action="/items/{{ item.id }}" class="ui form">
+        Name <input type="text" value="{{ item.name }}" name="name"/>
+        Price <input type="number" value="{{ item.price }}" name="price" label="Price"/>
+        Quality <input type="number"  min="0" max="1" step="0.001" value="{{ item.item_float }}" name="quality"/>
+        Type <input type="text" value="{{ item.item_type }}" name="type"/>
+
+        <button class="ui red button" type="submit">
+            <i class="undo icon"></i>
+            Update item
+        </button>
+    </form>
+{% else %}
+    <div class="ui segment">
+        {% if item.sold %}
+            <div class="ui negative message">
+                <h1 class="ui red header">This item has already been sold</h1>
+            </div>
+        {% endif %}
+        <div class="ui three column grid">
+            <div class="four wide column">
+                <div class="ui image" style="background-color: lightgrey">
+                    <div class="ui placeholder" style="height: 250px; width: 400px"></div>
+                </div>
+            </div>
+            <div class="six wide column" style="margin: auto">
+                <h1 class="ui header">{{ item.name }}</h1>
+                <div class="ui green label">{{ item.price / 100 }}€</div>
+                <div>Seller: {{ item.account_id }}</div>
+            </div>
+            <div class="four wide column">
             </div>
         </div>
-        <div class="six wide column" style="margin: auto">
-            <h1 class="ui header">{{ item.name }}</h1>
-            <div class="ui green label">{{ item.price / 100 }}€</div>
-            <div>Seller: {{ item.account_id }}</div>
-        </div>
-        <div class="four wide column">
-        </div>
+        {% if current_user.role == "ADMIN" and not item.sold %}
+            <form method="POST" action="/items/delete/{{ item.id }}">
+                <button class="ui red basic button" type="submit">
+                    <i class="trash alternate outline icon"></i>
+                    Delete item
+                </button>
+            </form>
+        {% endif %}
     </div>
-    {% if (current_user.id == item.account_id or current_user.role == "ADMIN") and not item.sold %}
-        <form method="POST" action="/items/delete/{{ item.id }}">
-            <button class="ui red basic button" type="submit">
-                <i class="trash alternate outline icon"></i>
-                Delete item
-            </button>
-        </form>
-    {% endif %}
-</div>
+{% endif %}
 {% endblock %}

@@ -15,7 +15,6 @@ def items_index():
 @app.route("/items/new")
 @login_required
 def items_form():
-    print(current_user.balance)
     return render_template("items/new.html", form = ItemForm())
 
 @app.route("/items", methods=["POST"])
@@ -50,11 +49,15 @@ def items_view(item_id):
 
 @app.route("/items/<item_id>", methods=["POST"])
 @login_required
-def items_set_price(item_id):
+def items_update(item_id):
     i = Item.query.get(item_id)
 
     if i.account_id == current_user.id:
+        i.name = request.form["name"]
         i.price = request.form["price"]
+        i.item_type = request.form["type"]
+        i.item_float = request.form["quality"]
+
         db.session().commit()
     else:
         flash("You can only change the price of your own items")
@@ -89,6 +92,7 @@ def items_purchase(item_id):
         return redirect(url_for("items_index"))
 
     user = current_user
+    seller = User.query.get(i.account_id)
 
     if(i.price > user.balance):
         flash("Not enough balance")
@@ -97,7 +101,10 @@ def items_purchase(item_id):
     p = Purchase(current_user.id, i.id)
     db.session.add(p)
     i.sold = True
+    
     user.balance -= i.price
+    seller.balance += i.price
+
     db.session().commit()
     flash("Purchase successfull")
     return redirect(url_for("items_index"))

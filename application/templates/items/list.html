@@ -25,17 +25,6 @@
             <div class="description">
                 <p>Quality: {{ item.item_float }}</p>
                 <p>Type: {{ item.item_type }}</p>
-
-                {% if current_user.id == item.account_id %}
-                    <form method="POST" action="/items/{{ item.id }}" class="ui form">
-                        <input type="number" value="{{ item.price }}" name="price"/>
-                        <button class="ui red button" type="submit">
-                                <i class="add icon"></i>
-                                Change price
-                            </button>
-                    </form>
-                {% endif %}
-                
             </div>
             
         </div>
