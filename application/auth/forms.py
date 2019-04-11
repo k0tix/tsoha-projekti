@@ -13,6 +13,7 @@ class RegisterForm(FlaskForm):
     username = StringField("username")
     email = StringField("email")
     password = PasswordField("password")
+    role = StringField("role")
 
     class Meta:
         csrf = False

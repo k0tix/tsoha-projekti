@@ -46,7 +46,7 @@ def auth_register():
     if not form.validate():
         return render_template("auth/register.html", form = form, error = "Bad input")
 
-    u = User(form.name.data, form.username.data, form.email.data, form.password.data)
+    u = User(form.name.data, form.username.data, form.email.data, form.password.data, form.role.data)
     db.session().add(u)
     db.session().commit()
 

@@ -23,14 +23,14 @@ class User(db.Model):
 
     items = db.relationship("Item", backref="account", lazy=True)
 
-    def __init__(self, name, username, email, pwd):
+    def __init__(self, name, username, email, pwd, role):
         self.name = name
         self.username = username
         self.email = email
         self.pwd_hash = flask_bcrypt.generate_password_hash(pwd).decode("utf-8")
         self.balance = 10000000
         self.banned = False
-        self.role = "USER"
+        self.role = role
     
     def get_id(self):
         return self.id
