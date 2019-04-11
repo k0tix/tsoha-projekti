@@ -15,8 +15,6 @@ def auth_login():
     if not form.validate():
         return render_template("auth/login.html", form = form)
 
-    print(form)
-
     user = User.query.filter_by(username=form.username.data).first()
 
     if not user:
