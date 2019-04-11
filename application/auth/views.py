@@ -49,4 +49,7 @@ def auth_register():
     u = User(form.name.data, form.username.data, form.email.data, form.password.data)
     db.session().add(u)
     db.session().commit()
+
+    user = User.query.filter_by(username=form.username.data).first()
+    login_user(user)
     return redirect(url_for("index"))
