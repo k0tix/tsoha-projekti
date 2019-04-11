@@ -14,4 +14,4 @@ A registered user can:
 > * add balance to account
 
 ## Database diagram
-![diagram](diagram1.png)
+![diagram](images/diagram1.png)
