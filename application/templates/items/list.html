@@ -20,17 +20,17 @@
             </a>
             <div class="meta">
                 <span class="ui green label">{{ item.price / 100 }} €</span>
-                <span class="seller">{{ item.account_id }}</span>
+                <span class="seller">{{ item.seller_username }}</span>
             </div>
             <div class="description">
-                <p>Quality: {{ item.item_float }}</p>
+                <p>Quality: {{ item.quality }}</p>
                 <p>Type: {{ item.item_type }}</p>
             </div>
             
         </div>
         <form method="POST" action="/items/purchase/{{ item.id }}">
             <input type="hidden" value="{{ item.id }}"/>
-            <button class="fluid ui bottom  blue button" type="submit">
+            <button class="fluid ui bottom blue button" type="submit">
                 <i class="shopping cart icon"></i>
                 Buy item
             </button>

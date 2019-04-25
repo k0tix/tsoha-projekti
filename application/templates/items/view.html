@@ -2,21 +2,6 @@
 
 {% block body %}
 
-{% if current_user.id == item.account_id %}
-    <h1 class="ui header">Edit your item</h1>
-    <div class="ui divider"></div>
-    <form method="POST" action="/items/{{ item.id }}" class="ui form">
-        Name <input type="text" value="{{ item.name }}" name="name"/>
-        Price <input type="number" value="{{ item.price }}" name="price" label="Price"/>
-        Quality <input type="number"  min="0" max="1" step="0.001" value="{{ item.item_float }}" name="quality"/>
-        Type <input type="text" value="{{ item.item_type }}" name="type"/>
-
-        <button class="ui red button" type="submit">
-            <i class="undo icon"></i>
-            Update item
-        </button>
-    </form>
-{% else %}
     <div class="ui segment">
         {% if item.sold %}
             <div class="ui negative message">
@@ -46,5 +31,4 @@
             </form>
         {% endif %}
     </div>
-{% endif %}
 {% endblock %}
