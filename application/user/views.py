@@ -33,3 +33,33 @@ def user_ban(user_id):
     db.session.commit()
 
     return redirect(url_for("user_index", user_username=user.username))
+
+
+@app.route("/user/<user_id>/addbalance", methods=["POST"])
+def increase_balance(user_id):
+    if current_user.is_anonymous == True:
+        flash("You must be logged in to add balance")
+        return redirect(url_for("items_index"))
+
+    try:
+        amount = int(request.form.get("amount"))
+    except:
+        flash("You must give an integer when updating balance")
+        return redirect(url_for("items_index"))
+    
+    if amount < 0:
+        flash("You cannot add negative balance")
+        return redirect(url_for("items_index"))
+
+    u = User.query.get(user_id)
+    if not u:
+        flash("User not found")
+        return redirect(url_for("items_index"))
+
+    if current_user.id == u.id:
+        u.balance += amount
+        db.session.commit()
+        return redirect(url_for("user_index", user_username=u.username))
+    else:
+        flash("Something went wrong")
+        return redirect(url_for("items_index"))
