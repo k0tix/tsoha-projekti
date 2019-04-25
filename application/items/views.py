@@ -9,8 +9,8 @@ from application.purchase.models import Purchase
 
 @app.route("/items/", methods=["GET"])
 def items_index():
-    i = Item.query.filter(Item.sold == False)
-    return render_template("items/list.html", items = i, current_user=current_user)
+    i = Item.find_items_with_username()
+    return render_template("items/list.html", items = i)
 
 @app.route("/items/new")
 @login_required
@@ -44,23 +44,37 @@ def items_view(item_id):
     if not i:
         flash("item was not found")
         redirect(url_for("items_index"))
-    
-    return render_template("items/view.html", item=i)
 
+    if current_user.is_anonymous is True or i.account_id != current_user.id:
+        return render_template("items/view.html", item=i)
+    else:
+        form = ItemForm()
+        form.name.data = i.name
+        form.price.data = i.price
+        form.item_type.data = i.item_type
+        form.quality.data = i.quality
+        return render_template("items/user_view.html", form = form, item=i)
+    
 @app.route("/items/<item_id>", methods=["POST"])
 @login_required
 def items_update(item_id):
     i = Item.query.get(item_id)
 
-    if i.account_id == current_user.id:
-        i.name = request.form["name"]
-        i.price = request.form["price"]
-        i.item_type = request.form["type"]
-        i.item_float = request.form["quality"]
+    if i.account_id != current_user.id:
+        flash("You cannot edit other accounts items")
+        return redirect(url_for("items_index"))
 
-        db.session().commit()
-    else:
-        flash("You can only change the price of your own items")
+    form = ItemForm(request.form)
+
+    if not form.validate():
+        return render_template("items/user_view.html", form = form)
+
+    i.name = form.name.data
+    i.price = form.price.data
+    i.item_type = form.item_type.data
+    i.quality = form.quality.data
+
+    db.session().commit()
 
     return redirect(url_for("items_index"))
 
@@ -94,7 +108,11 @@ def items_purchase(item_id):
     user = current_user
     seller = User.query.get(i.account_id)
 
-    if(i.price > user.balance):
+    if user.id == seller.id:
+        flash("You cannot buy your own item")
+        return redirect(url_for("items_index"))
+
+    if i.price > user.balance:
         flash("Not enough balance")
         return redirect(url_for("items_index"))
 
