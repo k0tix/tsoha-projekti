@@ -20,13 +20,13 @@
 			{% if current_user.is_authenticated %}
 				<div class="right item">
 					<a style="padding-right: 1em" href="{{ url_for('user_index', user_username=current_user.username) }}"><i class="big user circle icon"></i>{{ current_user.name }}</a>
-					<a class="ui red button" href="{{ url_for('auth_logout') }}">Logout</a>
+					<a class="ui inverted red button" href="{{ url_for('auth_logout') }}">Logout</a>
 				</div>
 				
 			{% else %}
 				<div class="right item">
-					<a class="ui inverted button" href="{{ url_for('auth_login') }}">Log in</a>
-					<a class="ui inverted button" href="{{ url_for('auth_register') }}">Sign Up</a>
+					<a style="margin-right: 1em" class="ui inverted blue button" href="{{ url_for('auth_login') }}">Log in</a>
+					<a class="ui inverted green button" href="{{ url_for('auth_register') }}">Sign Up</a>
 				</div>
         	{% endif %}
 		</div>
