@@ -33,25 +33,56 @@
         </div>
     </div>
     <div class="ui segment">
-        <h1>Purchases</h1>
-        <table class="ui celled table">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Price (€)</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for purchase in purchases %}
-                    <tr>
-                        <td>{{ purchase.name }}</td>
-                        <td>{{ purchase.price / 100 }}</td>
-                        <td>{{ purchase.date }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="ui accordion">
+            <div class="title">
+                <h1>
+                    <i class="dropdown icon"></i>
+                    Purchases
+                </h1>
+            </div>
+            <div class="content">
+                <div class="transition hidden">
+                    <table class="ui celled table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price (€)</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for purchase in purchases %}
+                                <tr>
+                                    <td>{{ purchase.name }}</td>
+                                    <td>{{ purchase.price / 100 }}</td>
+                                    <td>{{ purchase.date }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui segment">
+        <h1>
+            Add balance
+            <i class="large green money bill alternate icon"></i>
+        </h1>
+        <form method="POST" action="/user/{{ user.id }}/addbalance" class="ui form">
+            <div class="two fields">
+                <input type="hidden" value="{{ user.id }}" name="user_id"/>
+                <input type="number" min="0" name="amount"/>
+                <button class="circular ui green icon button" type="submit">
+                        <i class="large plus icon"></i>
+                </button>
+            </div>
+        </form>
     </div>
 </div>
+<script>
+    $('.ui.accordion')
+        .accordion()
+    ;
+</script>
 {% endblock %}
