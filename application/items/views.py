@@ -39,14 +39,17 @@ def items_create():
 
 @app.route("/items/<item_id>", methods=["GET"])
 def items_view(item_id):
-    i = Item.query.get(item_id)
+    i = Item.query.join(User, Item.account_id==User.id).add_columns(User.username).filter(Item.id == item_id).first()
+
+    username = i[1]
+    i = i[0]
 
     if not i:
         flash("item was not found")
         redirect(url_for("items_index"))
 
     if current_user.is_anonymous is True or i.account_id != current_user.id:
-        return render_template("items/view.html", item=i)
+        return render_template("items/view.html", item=i, username=username)
     else:
         form = ItemForm()
         form.name.data = i.name
