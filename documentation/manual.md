@@ -19,3 +19,6 @@
 ## Modify items:
 
 ![Modify item](images/update-item.gif)
+
+## Add balance:
+![Add balance](images/add-balance.gif)
