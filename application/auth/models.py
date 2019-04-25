@@ -55,12 +55,11 @@ class User(db.Model):
 
         res = db.engine.execute(stmt)
 
-        response = []
-        for row in res:
-            response.append({"name":row[0], "price":row[1], "date":row[2]})
+        response = [{"name":row[0], "price":row[1], "date":row[2]} for row in res]
 
         return response
 
+    @staticmethod
     def get_total_money_used(user_id):
         stmt = text("SELECT SUM(Item.price) FROM Item"
                     " JOIN Purchase ON Purchase.item_id = Item.id"
@@ -71,8 +70,9 @@ class User(db.Model):
         for row in res:
             return row[0]
 
+    @staticmethod
     def get_average_quality_purchased(user_id):
-        stmt = text("SELECT AVG(Item.item_float) FROM Item"
+        stmt = text("SELECT AVG(Item.quality) FROM Item"
                     " JOIN Purchase ON Purchase.item_id = Item.id"
                     " WHERE Purchase.account_id = :acc_id").params(acc_id=user_id)
 
