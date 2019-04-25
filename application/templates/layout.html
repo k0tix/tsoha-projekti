@@ -35,10 +35,19 @@
 	<div class="ui container" style="padding-top: 6em">
 			{% with messages = get_flashed_messages() %}
 			{% if messages %}
-			  <div class=flashes>
-			  {% for message in messages %}
-				<div class="ui negative message">{{ message }}</div>
-			  {% endfor %}
+			  <div class=flashes style="padding-bottom: 3em">
+					{% for message in messages %}
+					<div class="ui dimmer modals page transition hidden"><div class="ui standard test modal transition hidden">
+							<div class="header">
+								{{ message }}
+							</div>
+							<div class="actions">
+								<div class="ui positive right button">
+									Ok!
+								</div>
+							</div>
+						</div></div>
+					{% endfor %}
 			  </div>
 			{% endif %}
 		  {% endwith %}
@@ -48,6 +57,12 @@
 		</p>
 		{% endblock %}
 	</div>
+
+	<script>
+		$('.ui.modal')
+			.modal('show')
+		;
+	</script>
 </body>
 
 </html>
