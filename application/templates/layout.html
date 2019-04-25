@@ -2,67 +2,71 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
-	<title>Byteskins - A marketplace for in-game items</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+    <title>Byteskins - A marketplace for in-game items</title>
 </head>
 
 <body>
-	<div class="ui fixed inverted menu">
-		<div class="ui container">
-			<a href="{{ url_for('index') }}" class="header item">
-				Byteskins
-			</a>
-			<a href="{{ url_for('items_index') }}" class="item">Items</a>
-			<a href="{{ url_for('items_form') }}" class="item">Add item</a>
-			{% if current_user.is_authenticated %}
-				<div class="right item">
-					<a style="padding-right: 1em" href="{{ url_for('user_index', user_username=current_user.username) }}"><i class="big user circle icon"></i>{{ current_user.name }}</a>
-					<a class="ui inverted red button" href="{{ url_for('auth_logout') }}">Logout</a>
-				</div>
-				
-			{% else %}
-				<div class="right item">
-					<a style="margin-right: 1em" class="ui inverted blue button" href="{{ url_for('auth_login') }}">Log in</a>
-					<a class="ui inverted green button" href="{{ url_for('auth_register') }}">Sign Up</a>
-				</div>
-        	{% endif %}
-		</div>
-	</div>
+    <div class="ui fixed inverted menu">
+        <div class="ui container">
+            <a href="{{ url_for('index') }}" class="header item">
+                Byteskins
+            </a>
+            <a href="{{ url_for('items_index') }}" class="item">Items</a>
+            <a href="{{ url_for('items_form') }}" class="item">Add item</a>
+            {% if current_user.is_authenticated %}
+            <div class="right item">
+                <a style="padding-right: 1em" href="{{ url_for('user_index', user_username=current_user.username) }}"><i
+                        class="big user circle icon"></i>{{ current_user.name }}</a>
+                <a class="ui inverted red button" href="{{ url_for('auth_logout') }}">Logout</a>
+            </div>
 
-	<div class="ui container" style="padding-top: 6em">
-			{% with messages = get_flashed_messages() %}
-			{% if messages %}
-			  <div class=flashes style="padding-bottom: 3em">
-					{% for message in messages %}
-					<div class="ui dimmer modals page transition hidden"><div class="ui standard test modal transition hidden">
-							<div class="header">
-								{{ message }}
-							</div>
-							<div class="actions">
-								<div class="ui positive right button">
-									Ok!
-								</div>
-							</div>
-						</div></div>
-					{% endfor %}
-			  </div>
-			{% endif %}
-		  {% endwith %}
-		{% block body %}
-		<p>
-			Content.
-		</p>
-		{% endblock %}
-	</div>
+            {% else %}
+            <div class="right item">
+                <a style="margin-right: 1em" class="ui inverted blue button" href="{{ url_for('auth_login') }}">Log
+                    in</a>
+                <a class="ui inverted green button" href="{{ url_for('auth_register') }}">Sign Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 
-	<script>
-		$('.ui.modal')
-			.modal('show')
-		;
-	</script>
+    <div class="ui container" style="padding-top: 6em">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class=flashes>
+            {% for message in messages %}
+            <div class="ui dimmer modals page transition hidden">
+                <div class="ui standard test modal transition hidden">
+                    <div class="header">
+                        {{ message }}
+                    </div>
+                    <div class="actions">
+                        <div class="ui positive right button">
+                            Ok!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block body %}
+        <p>
+            Content.
+        </p>
+        {% endblock %}
+    </div>
+
+    <script>
+        $('.ui.modal')
+            .modal('show')
+        ;
+    </script>
 </body>
 
 </html>
