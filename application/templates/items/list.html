@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1 class="ui header">All items</h1>
-<div class="ui divider"></div>
+<h1 class="ui inverted header">All items</h1>
+<div class="ui inverted divider"></div>
 {% if error %}
     <div class="ui negative message">{{ error }}</div>
 {% endif %}
 <div class="ui four cards">
     {% for item in items %}
-    <div class="ui raised card">
+    <div class="ui inverted raised card">
         <a class="image" href="/items/{{ item.id }}">
             <div class="ui placeholder" style="height: 150px; width: 150px">
                 <div class="square image"></div>

@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1 class="ui header">User account</h1>
-<div class="ui divider"></div>
+<h1 class="ui inverted header">User account</h1>
+<div class="ui inverted divider"></div>
     <div class="ui segment">
         <div class="ui grid">
             <div class="four wide column">
@@ -17,8 +17,24 @@
                 <div class="ui red label">{{ user.role }}</div>
                 <div class="ui blue basic label">{{ user.username }}</div>
                 <p style="margin-top: 1em">{{ user.email }}</p>
+                {% if user.banned %}
+                    <h2 class="ui red header">This user has been banned</h2>
+                {% endif %}
             </div>
         </div>
+        {% if admin %}
+            <form method="POST" action="/user/ban/{{ user.id }}" style="margin-top: 2em">
+                <input type="hidden" value="{{ user.id }}" />
+                <button class="ui red button" type="submit">
+                    <i class="ban icon"></i>
+                    {% if user.banned %}
+                        Unban user
+                    {% else %}
+                        Ban user
+                    {% endif %}
+                </button>
+            </form>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
