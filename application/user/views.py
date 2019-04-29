@@ -23,13 +23,13 @@ def user_index(user_username):
         average_quality = User.get_average_quality_purchased(current_user.id)
         return render_template("user/user.html", user=current_user, purchases=purchases, total_money=total, average_quality=average_quality)
     else:
-        return render_template("user/preview.html", user=user)
+        return render_template("user/preview.html", user=user, admin=current_user.role == "ADMIN")
 
 @app.route("/user/ban/<user_id>", methods=["POST"])
 @login_required(role="ADMIN")
 def user_ban(user_id):
     user = User.query.get(user_id)
-    user.banned = True
+    user.banned = not user.banned
     db.session.commit()
 
     return redirect(url_for("user_index", user_username=user.username))
