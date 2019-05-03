@@ -10,9 +10,9 @@ from application.purchase.models import Purchase
 @app.route("/items", defaults={"page": 1})
 @app.route("/items/page/<int:page>")
 def items_index(page=1):
-    i = db.session.query(Item).join(User, Item.account_id==User.id).add_columns(User.username).paginate(page, 8, False)
+    i = db.session.query(Item).join(User, Item.account_id==User.id).add_columns(User.username).filter(Item.sold==False).paginate(page, 8, False)
     most_bookmarked = Item.get_most_bookmarked_item()
-    
+
     return render_template("items/list.html", items = i.items, most_bookmarked=most_bookmarked, item_list=i)
 
 @app.route("/items/new")
