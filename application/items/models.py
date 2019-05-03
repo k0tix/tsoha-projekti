@@ -13,7 +13,7 @@ class Item(db.Model):
     name = db.Column(db.String(144), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     quality = db.Column(db.Float, nullable=False) # Describes how good the item is from 0-1. 1 is perfect quality and 0 is worst quality
-    item_type = db.Column(db.String(144), nullable=False)
+    item_type = db.Column(db.String(144), nullable=False, index=True)
     sold = db.Column(db.Boolean, nullable=False)
 
     account_id = db.Column(db.Integer, db.ForeignKey("account.id"),
@@ -42,7 +42,7 @@ class Item(db.Model):
     def get_most_bookmarked_item():
         stmt = text("SELECT Item.id, Item.name, COUNT(Bookmark.item_id) AS bookmarks FROM Item"
                     " JOIN Bookmark ON Item.id = Bookmark.item_id"
-                    " GROUP BY Bookmark.item_id"
+                    " GROUP BY Item.id"
                     " ORDER BY bookmarks DESC LIMIT 1")
 
         res = db.engine.execute(stmt)
