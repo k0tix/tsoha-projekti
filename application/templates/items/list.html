@@ -1,37 +1,72 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1 class="ui inverted header">All items</h1>
-{% if most_bookmarked is not none %}
-    <a href="/items/{{ most_bookmarked.id }}">{{ most_bookmarked.name }} (most bookmarked item)</a>
+<h1 class="ui inverted header">
+    All items
+    {% if most_bookmarked is not none %}
+    <a href="/items/{{ most_bookmarked.id }}" class="ui blue inverted button" style="margin-left: 4em">
+        Most bookmarked: {{ most_bookmarked.name }}
+    </a>
 {% endif %}
+</h1>
 <div class="ui inverted divider"></div>
 {% if error %}
     <div class="ui negative message">{{ error }}</div>
 {% endif %}
 <div class="ui four cards">
     {% for item in items %}
-    <div class="ui raised card">
-        <a class="image" href="/items/{{ item.id }}">
-            <div class="ui placeholder" style="height: 150px; width: 150px">
-                <div class="square image"></div>
-            </div>
-        </a>
-        <div class="content">
-            <a class="header" href="/items/{{ item.id }}">
-                <h2>{{ item.name }}</h2>
+        <div class="ui raised card">
+            <a class="image" href="/items/{{ item[0].id }}">
+                <div class="ui placeholder" style="height: 150px; width: 150px">
+                    <div class="square image"></div>
+                </div>
             </a>
-            <div class="meta">
-                <span class="ui green label">{{ item.price / 100 }} €</span>
-                <span class="seller">{{ item.seller_username }}</span>
+            <div class="content">
+                <a class="header" href="/items/{{ item[0].id }}">
+                    <h2>{{ item[0].name }}</h2>
+                </a>
+                <div class="meta">
+                    <span class="ui green label">{{ item[0].price / 100 }} €</span>
+                    <span class="seller">{{ item[1] }}</span>
+                </div>
+                <div class="description">
+                    <p>Quality: {{ item[0].quality }}</p>
+                    <p>Type: {{ item[0].item_type }}</p>
+                </div>
+
             </div>
-            <div class="description">
-                <p>Quality: {{ item.quality }}</p>
-                <p>Type: {{ item.item_type }}</p>
-            </div>
-            
         </div>
-    </div>
     {% endfor %}
 </div>
+<div class="ui inverted divider"></div>
+<div class="ui blue label">Page</div>
+<div class="ui pagination menu">
+        {% if item_list.has_prev %}
+            <a class="item" href="{{ url_for('items_index', page=item_list.prev_num) }}"><i class="angle left icon"></i></a>
+        {% else %}
+            <a class="disabled item"><i class="angle left icon"></i></a>
+        {% endif %}
+    
+        <!-- all page numbers -->
+        {% for page_num in item_list.iter_pages() %}
+        {% if page_num %}
+        {% if page_num != item_list.page %}
+            <a class="item" href="{{ url_for('items_index', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+            <a class="item active" href="#">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+            <div class="disabled item">
+                ...
+            </div>
+        {% endif %}
+        {% endfor %}
+    
+        <!-- next page -->
+        {% if item_list.has_next %}
+            <a class="item" href="{{ url_for('items_index', page=item_list.next_num) }}"><i class="angle right icon"></i></a>
+        {% else %}
+        <a class="disabled item"><i class="angle right icon"></i></a>
+        {% endif %}
+    </div>
 {% endblock %}
