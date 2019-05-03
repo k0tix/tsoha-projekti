@@ -16,7 +16,7 @@ class Item(db.Model):
     item_type = db.Column(db.String(144), nullable=False)
     sold = db.Column(db.Boolean, nullable=False)
 
-    account_id = db.Column(db.Integer, db.ForeignKey('account.id'),
+    account_id = db.Column(db.Integer, db.ForeignKey("account.id"),
                            nullable=False)
 
     def __init__(self, name, price, quality, item_type):
