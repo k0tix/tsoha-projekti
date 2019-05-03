@@ -2,7 +2,7 @@ from application import db, flask_bcrypt
 
 from sqlalchemy.sql import text
 
-### Model ###
+# Model 
 
 class User(db.Model):
     

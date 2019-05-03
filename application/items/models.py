@@ -2,7 +2,7 @@ from application import db
 
 from sqlalchemy.sql import text
 
-### MODEL ###
+# Model
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -12,7 +12,7 @@ class Item(db.Model):
 
     name = db.Column(db.String(144), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    quality = db.Column(db.Float, nullable=False) #Describes how good the item is from 0-1. 1 is perfect quality and 0 is worst quality
+    quality = db.Column(db.Float, nullable=False) # Describes how good the item is from 0-1. 1 is perfect quality and 0 is worst quality
     item_type = db.Column(db.String(144), nullable=False)
     sold = db.Column(db.Boolean, nullable=False)
 
