@@ -52,7 +52,7 @@ def bookmarks_delete(item_id):
         db.session.commit()
         flash("Bookmark deleted")
 
-    return redirect(url_for("items_index"))
+    return redirect(url_for("list_bookmarks"))
 
 @app.route("/bookmarks/update/<item_id>", methods=["POST"])
 @login_required
@@ -72,4 +72,4 @@ def update_bookmark(item_id):
     b.name = request.form.get("name")
     db.session.commit()
 
-    return redirect(url_for("items_index"))
+    return redirect(url_for("list_bookmarks"))
