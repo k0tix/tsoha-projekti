@@ -39,14 +39,15 @@
     {% endfor %}
 </div>
 <div class="ui inverted divider"></div>
-<div class="ui blue label">Page</div>
-<div class="ui pagination menu">
+<div style="margin-bottom: 2em">
+    <div class="ui blue label">Page</div>
+    <div class="ui pagination menu">
         {% if item_list.has_prev %}
             <a class="item" href="{{ url_for('items_index', page=item_list.prev_num) }}"><i class="angle left icon"></i></a>
         {% else %}
             <a class="disabled item"><i class="angle left icon"></i></a>
         {% endif %}
-    
+
         <!-- all page numbers -->
         {% for page_num in item_list.iter_pages() %}
         {% if page_num %}
@@ -61,12 +62,13 @@
             </div>
         {% endif %}
         {% endfor %}
-    
+
         <!-- next page -->
         {% if item_list.has_next %}
             <a class="item" href="{{ url_for('items_index', page=item_list.next_num) }}"><i class="angle right icon"></i></a>
         {% else %}
-        <a class="disabled item"><i class="angle right icon"></i></a>
+            <a class="disabled item"><i class="angle right icon"></i></a>
         {% endif %}
     </div>
+</div>
 {% endblock %}
