@@ -21,4 +21,17 @@
 ![Modify item](images/update-item.gif)
 
 ## Add balance:
+
 ![Add balance](images/add-balance.gif)
+
+## Add bookmark
+
+![Add bookmark](images/add-bookmark.gif)
+
+## Edit bookmark
+
+![Edit bookmark](images/edit-bookmark.gif)
+
+## Delete bookmark
+
+![Delete bookmark](images/delete-bookmark.gif)
