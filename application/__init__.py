@@ -76,6 +76,9 @@ from application.auth import models
 
 from application.user import views
 
+from application.bookmarks import views
+from application.bookmarks import models
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

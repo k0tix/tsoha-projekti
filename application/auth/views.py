@@ -26,6 +26,7 @@ def auth_login():
         return render_template("auth/login.html", form = LoginForm(), error = "Bad username or password")
 
     login_user(user)
+
     return redirect(url_for("index"))
 
 @app.route("/auth/logout")

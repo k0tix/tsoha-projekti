@@ -17,6 +17,7 @@
             </a>
             <a href="{{ url_for('items_index') }}" class="item">Items</a>
             <a href="{{ url_for('items_form') }}" class="item">Add item</a>
+            <a href="{{ url_for('list_bookmarks') }}" class="item">Bookmarks</a>
             {% if current_user.is_authenticated %}
             <div class="right item">
                 <a style="padding-right: 1em" href="{{ url_for('user_index', user_username=current_user.username) }}"><i

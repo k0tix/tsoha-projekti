@@ -7,7 +7,7 @@
         <h1 class="ui red header">This item has already been sold</h1>
     </div>
 {% else %}
-    <h1 class="ui header">Edit your item</h1>
+    <h1 class="ui inverted header">Edit your item</h1>
     <div class="ui divider"></div>
     <div class="ui segment">
         <form method="POST" action="/items/{{ item.id }}" class="ui form">
@@ -23,12 +23,18 @@
             {{ form.quality.label }}
             {{ form.quality(placeholder="float", min="0", max="1", step="0.001", type="number") }}
 
-            <button class="ui purple button" type="submit">
+            <button class="ui purple button" type="submit" style="margin-top: 1em">
                 <i class="undo icon"></i>
                 Update item
             </button>
         </form>
     </div>
+    <form method="POST" action="/bookmarks/{{ item.id }}">
+        <button class="ui blue icon button" type="submit">
+                <i class="bookmark icon"></i>
+                Bookmark
+        </button>
+    </form>
 {% endif %}
 
 {% endblock %}
