@@ -37,3 +37,14 @@ class Item(db.Model):
         response = [{"id": row[0], "name": row[1], "price": row[2], "quality": row[3], "item_type": row[4], "sold": row[5], "seller_username": row[6]} for row in res]
 
         return response
+
+    @staticmethod
+    def get_most_bookmarked_item():
+        stmt = text("SELECT Item.id, Item.name, COUNT(Bookmark.item_id) AS bookmarks FROM Item"
+                    " JOIN Bookmark ON Item.id = Bookmark.item_id"
+                    " GROUP BY Bookmark.item_id"
+                    " ORDER BY bookmarks DESC LIMIT 1")
+
+        res = db.engine.execute(stmt)
+        for row in res:
+            return {"id": row[0], "name": row[1], "bookmarks": row[2]}

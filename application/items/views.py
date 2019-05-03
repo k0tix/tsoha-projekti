@@ -10,7 +10,8 @@ from application.purchase.models import Purchase
 @app.route("/items/", methods=["GET"])
 def items_index():
     i = Item.find_items_with_username()
-    return render_template("items/list.html", items = i)
+    most_bookmarked = Item.get_most_bookmarked_item()
+    return render_template("items/list.html", items = i, most_bookmarked=most_bookmarked)
 
 @app.route("/items/new")
 @login_required
