@@ -1,5 +1,5 @@
 from application import app, db
-from flask import redirect, flash, url_for, render_template
+from flask import redirect, flash, url_for, render_template, request
 from flask_login import login_required, current_user
 
 from application.items.models import Item
